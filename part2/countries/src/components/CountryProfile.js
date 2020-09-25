@@ -1,4 +1,5 @@
 import React from 'react'
+import Weather from './Weather'
 
 const CountryProfile = ({country}) => {
   return (
@@ -6,13 +7,14 @@ const CountryProfile = ({country}) => {
         <h1>{country.name}</h1>
         <div>capital {country.capital}</div>
         <div>population {country.population}</div>
-        <h2>languages</h2>
+        <h2>Spoken languages</h2>
         <ul>
-        {country.languages.map(language =>
-            <li key={country.alpha2Code + '-' + language.name} >{language.name}</li>    
+        {country.languages.map((language, index) =>
+            <li key={index}>{language.name}</li>    
         )}
         </ul>
         <img src={country.flag} alt={`flag ${country.name}`} style={{width: '150px'}} />
+        <Weather city={country.capital}  />
     </div>
   )
 }
