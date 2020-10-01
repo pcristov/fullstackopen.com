@@ -6,6 +6,7 @@ const Weather = ({city}) => {
     const api_key = process.env.REACT_APP_API_KEY
     const [weatherDetails, setWeatherDetails] = useState({})
     const hook = () => {
+        let unmounted = false
         axios
             .get('http://api.weatherstack.com/current', {
                 params: {
@@ -14,9 +15,13 @@ const Weather = ({city}) => {
                 }
             })
             .then(response => {
-            setWeatherDetails(response.data)
+                if (!unmounted) {
+                    setWeatherDetails(response.data)
+                }
             })
-        }
+            
+        return () => { unmounted = true }
+    }
 
     // executed immediately after rendering
     useEffect(hook, [city])
