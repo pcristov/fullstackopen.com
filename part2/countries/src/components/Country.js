@@ -1,8 +1,11 @@
 import React from 'react'
+import Button from './Button'
 
-const Country = ({country}) => {
+const Country = ({country, show}) => {
   return (
-    <li>{country.name}</li>
+    <div>
+      {country.name} <Button country={country} show={show} text="show" />
+    </div>
   )
 }
 

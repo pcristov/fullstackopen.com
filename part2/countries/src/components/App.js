@@ -22,6 +22,10 @@ const App = (props) => {
     }
   }
 
+  const handleShow = (countryName) => {
+    setFilterText(countryName)
+  }
+
   const hook = () => {
     axios
       .get('https://restcountries.eu/rest/v2/all')
@@ -36,13 +40,13 @@ const App = (props) => {
   return (
     <div>
       <div>
-        find countries <input onChange={handleFilterChange} />
+        find countries <input value={filterText} onChange={handleFilterChange} />
       </div>
       {countriesToShow.length > 10
         ? 'Too many matches, specify another filter'
         : countriesToShow.length === 1
           ? <CountryProfile country={countriesToShow[0]} />
-          : <Countries countries={countriesToShow} />
+          : <Countries countries={countriesToShow} show={handleShow} />
       }
     </div>
   )

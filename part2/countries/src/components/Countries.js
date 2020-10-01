@@ -1,13 +1,13 @@
 import React from 'react'
 import Country from './Country'
 
-const Countries = ({countries}) => {
+const Countries = ({countries, show}) => {
   return (
-    <ul>
+    <div>
     {countries.map((country) => 
-      <Country key={country.alpha2Code} country={country} />
+        <Country key={country.alpha2Code} country={country} show={show} />
     )}
-  </ul>
+    </div>
   )
 }
 
