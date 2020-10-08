@@ -36,6 +36,17 @@ const App = () => {
     }
   }
 
+  const deletePerson = (event) => {
+    event.preventDefault()
+    if(window.confirm("Are you sure you want to delete this person?")) {
+      personService
+      .deletePerson(event.target.id)
+      .then(returnedPeople => {
+        hook()
+      })
+    }
+  }
+
   const addPerson = (event) => {
     event.preventDefault()
     const found = persons.some(el => el.name === newName)
@@ -51,8 +62,8 @@ const App = () => {
   
       personService
       .create(personObject)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
+      .then(returnedPeople => {
+        setPersons(persons.concat(returnedPeople))
         setNewName('')
         setNewNumber('')
       })
@@ -74,7 +85,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} addPerson={addPerson} newName={newName} newNumber={newNumber} />
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} deletePerson={deletePerson} />
     </div>
   )
 }
