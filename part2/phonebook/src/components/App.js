@@ -49,10 +49,28 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    const found = persons.some(el => el.name === newName)
+    const found = persons.find(el => el.name === newName)
 
     if(found) {
-      alert(`${newName} is already added to phonebook`)
+      console.log(found)
+      if(window.confirm(`${found.name} is already added to phonebook, replace the old number with a new one?`)) {
+        const id = found.id
+        const changedPerson = { ...found, number: newNumber }
+
+        personService
+        .update(id, changedPerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== found.id ? person : returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          alert(
+            `the person '${found.name}' was already deleted from server`
+          )
+          setPersons(persons.filter(n => n.id !== id))
+        })
+      }
     }
     else {
       const personObject = {
