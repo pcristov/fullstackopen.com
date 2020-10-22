@@ -12,6 +12,7 @@ const App = () => {
   const [filterText, setFilterText] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [notification, setNotification] = useState(null)
+  const [errorNotification, setErrorNotification] = useState(null)
 
   const hook = () => {
     personService
@@ -73,9 +74,14 @@ const App = () => {
           }, 5000)
         })
         .catch(error => {
-          alert(
-            `the person '${found.name}' was already deleted from server`
+          setErrorNotification(1)
+          setNotification(
+            `Information on ${found.name} has already been removed from server`
           )
+          setTimeout(() => {
+            setNotification(null)
+            setErrorNotification(null)
+          }, 5000)
           setPersons(persons.filter(n => n.id !== id))
         })
       }
@@ -113,7 +119,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification} />
+      <Notification message={notification} error={errorNotification} />
       <Filter handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
       <PersonForm handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} addPerson={addPerson} newName={newName} newNumber={newNumber} />
