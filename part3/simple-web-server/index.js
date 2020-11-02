@@ -68,11 +68,7 @@ const generateId = () => {
 app.use(express.json())
 
 app.post('/api/notes', (request, response) => {
-  const note = request.body // Without the json-parser, the body property would be undefined.
-                            // The json-parser functions so that it takes the JSON data of a request,
-                            // transforms it into a JavaScript object and then attaches it to the body
-                            // property of the request object before the route handler is called.
-
+  const body = request.body
 
   if (!body.content) {
     return response.status(400).json({ 
