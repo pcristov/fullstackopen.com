@@ -65,11 +65,10 @@ app.delete('/api/persons/:id', (request, response) => {
 
 // ---
 
-const generateId = () => {
-  const maxId = persons.length > 0
-    ? Math.max(...persons.map(n => n.id))
-    : 0
-  return maxId + 1
+const generateId = (min, max) => {
+  const minimum = Math.ceil(min)
+  const maximum = Math.floor(max)
+  return Math.floor(Math.random() * (maximum - minimum) + minimum)
 }
 
 app.use(express.json())
@@ -86,7 +85,7 @@ app.post('/api/persons', (request, response) => {
   const person = {
     name: body.name,
     number: body.number,
-    id: generateId(),
+    id: generateId(1, 100000),
   }
 
   persons = persons.concat(person)
